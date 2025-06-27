@@ -8,6 +8,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const corsOptions = {
+    origin: ['https://bookmyhair.netlify.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+app.use(cors(corsOptions));
+
+app.use('/api/treatments', treatmentRoutes);
+
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect(process.env.MONGO_URI)
@@ -17,16 +25,6 @@ mongoose.connect(process.env.MONGO_URI)
 app.get('/', (req, res) => {
     res.send('Frisörbokning backend är igång!');
 });
-
-const corsOptions = {
-    origin: ['https://bookmyhair.netlify.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-};
-
-app.use(cors(corsOptions));
-
-
-app.use('/api/treatments', treatmentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servern kör på port ${PORT}`);
