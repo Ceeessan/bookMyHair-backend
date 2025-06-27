@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const treatmentRoutes = require('./routes/treatments');
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,16 @@ mongoose.connect(process.env.MONGO_URI)
 app.get('/', (req, res) => {
     res.send('Frisörbokning backend är igång!');
 });
+
+const corsOptions = {
+    origin: ['https://bookmyhair.netlify.app'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
+app.use(cors(corsOptions));
+
+
+app.use('/api/treatments', treatmentRoutes);
 
 app.listen(PORT, () => {
     console.log(`Servern kör på port ${PORT}`);
