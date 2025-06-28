@@ -3,18 +3,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const treatmentRoutes = require('./routes/treatments');
+const dateTimeRoutes = require('./routes/dateTime');
+const bookingRoutes = require('./routes/booking');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
 const corsOptions = {
     origin: ['https://bookmyhair.netlify.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 app.use(cors(corsOptions));
+app.use(express.json());
 
 app.use('/api/treatments', treatmentRoutes);
+app.use('/api/dateTime', dateTimeRoutes);
+// app.use('/api/booking', bookingRoutes);
 
 const PORT = process.env.PORT || 5000;
 
