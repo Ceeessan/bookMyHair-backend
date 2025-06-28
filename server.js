@@ -12,7 +12,8 @@ const corsOptions = {
     origin: ['https://bookmyhair.netlify.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
-app.use(cors(corsOptions));
+// Change to corsOptions when I am done.
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/treatments', treatmentRoutes);
