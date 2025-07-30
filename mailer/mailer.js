@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 
+console.log('EMAIL_PASS är satt:', !!process.env.EMAIL_PASS);
+
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -21,7 +24,13 @@ async function sendConfirmationEmail(toEmail, bookingId, cancelToken) {
         `
     };
 
-    await transporter.sendMail(mailOptions);
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Mail skickat till:', toEmail);
+    } catch (error) {
+        console.error('Fel vid mail-sändning:', error);
+        throw error;
+    }
 }
 
 module.exports = sendConfirmationEmail;

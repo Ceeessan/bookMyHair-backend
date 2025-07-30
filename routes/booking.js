@@ -20,6 +20,7 @@ router.post('/', async (req, res) => {
 
         res.status(201).json(savedBooking);
     } catch (error) {
+        console.error('Error saving booking:', error);
         res.status(400).json({ error: 'Problem with saving a new booking' });
     }
 });

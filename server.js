@@ -10,7 +10,11 @@ const bookingRoutes = require('./routes/booking');
 const app = express();
 
 const corsOptions = {
-    origin: ['https://bookmyhair.netlify.app'],
+    origin: ['https://bookmyhair.netlify.app',
+        'http://localhost:4200',
+        'http://localhost:3000',
+        'http://localhost:5000'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
