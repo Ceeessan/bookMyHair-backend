@@ -17,8 +17,7 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const allTimes = await DateTime.find();
-        console.log('Hämtade tider från DB:', allTimes);
-        res.json(allTimes);
+        res.status(200).json(allTimes);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
