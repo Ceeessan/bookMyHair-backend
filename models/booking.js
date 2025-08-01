@@ -33,4 +33,4 @@ const bookingSchema = new mongoose.Schema({
     cancelToken: { type: String, required: true }
 });
 
-module.exports = mongoose.model('booking', bookingSchema);
+module.exports = mongoose.model('Booking', bookingSchema);
