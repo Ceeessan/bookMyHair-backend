@@ -37,6 +37,6 @@ app.get('/', (req, res) => {
     res.send('Frisörbokning backend är igång!');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servern kör på port ${PORT}`);
 });
