@@ -3,16 +3,26 @@ const router = express.Router();
 const Booking = require('../models/booking');
 const sendConfirmationEmail = require('../mailer/mailer');
 const crypto = require('crypto');
-
+const sanitizeHtml = require('sanitize-html');
 
 router.post('/', async (req, res) => {
     console.log('POST body:', req.body);
+    const cleanMessage = sanitizeHtml(req.body.message || '', {
+        allowedTags: [],
+        allowedAttributes: {}
+    });
     try {
 
         //Create a token for cancel appointemt
         const cancelToken = crypto.randomBytes(16).toString('hex');
 
-        const newBooking = new Booking({ ...req.body, cancelToken });
+        const bookingData = {
+            ...req.body,
+            message: cleanMessage,
+            cancelToken
+        };
+
+        const newBooking = new Booking(bookingData);
         const savedBooking = await newBooking.save();
 
         //Send confirmation-mail

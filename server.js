@@ -6,8 +6,9 @@ const treatmentRoutes = require('./routes/treatments');
 const dateTimeRoutes = require('./routes/dateTime');
 const sendEmailRoutes = require('./routes/sendEmail');
 const bookingRoutes = require('./routes/booking');
-
+const rateLimit = require('express-rate-limit');
 const app = express();
+const helmet = require('helmet');
 
 const corsOptions = {
     origin: ['https://bookmyhair.netlify.app',
@@ -20,6 +21,15 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(helmet());
+
+
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    max: 5,
+    message: 'Du har skickat för många förfrågningar, försök igen senare.'
+});
+app.use(limiter);
 
 app.use('/api/treatments', treatmentRoutes);
 app.use('/api/dateTime', dateTimeRoutes);
@@ -36,7 +46,6 @@ mongoose.connect(process.env.MONGO_URI)
 app.get('/api/ping', (req, res) => {
     res.status(200).send('pong');
 });
-
 
 app.get('/', (req, res) => {
     res.send('Frisörbokning backend är igång!');
