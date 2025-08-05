@@ -64,10 +64,10 @@ router.delete('/cancel', async (req, res) => {
         if (!booking) {
             return res.status(404).json({ error: "Appointment could not be found or is already canceled" });
         }
-        res.json({ message: 'Appointment is now canceled' });
+        return res.status(200).json({ message: 'Din bokning har avbokats!' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Something went wrong with the cancelling" });
+        res.status(500).json({ error: "Ett fel inträffade vid avbokning." });
     }
 })
 
